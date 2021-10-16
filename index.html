@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script type="module">
+        import { getData, cloneTemplate, getObserver } from '/index.js';
+        const data = await getData(),
+            grid = document.getElementById("grid"),
+            last = data.length - 1;
+
+
+        data.forEach((record, index) => {
+            const clone = cloneTemplate("row");
+            grid.appendChild(clone);
+
+            if (last !== index)
+                return;
+
+            getObserver(grid).observe(grid.lastElementChild);
+
+        });
+
+    </script>
+    <title>Infinity Scroll</title>
+</head>
+
+<body>
+    <main>
+        <div id="grid">
+
+        </div>
+    </main>
+    <template id="row">
+        <div class="row">
+            <div>Hello World</div>
+        </div>
+    </template>
+</body>
+
+</html>
