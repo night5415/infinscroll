@@ -1,29 +1,45 @@
+:root {
+  --gray: #666b70;
+  --white: #ffffff;
+  --height: 0;
+  --bottom: 0;
+}
+
 body,
 html {
   margin: 0;
   padding: 0;
-  background-color: gray;
+  background-color: var(--gray);
 }
 
 main {
   width: 50vw;
   height: 100vh;
   margin: 0 auto;
-  background-color: #fff;
+  background-color: var(--white);
   box-sizing: border-box;
   padding: 25px;
 }
 
-#grid {
-  height: 500px;
-  background-color: #fff;
+#container {
   overflow: auto;
   scroll-behavior: smooth;
   margin: calc(50vh - 250px) 0;
+  height: 500px;
+}
+
+#grid {
+  height: calc(1px * var(--height));
+  background-color: var(--white);
+
   border: 1px solid #000;
+}
+
+#blank {
+  background-color: var(--gray);
 }
 
 .row {
   padding: 1rem;
-  border: 1px solid darkgray;
+  border-bottom: 1px solid var(--gray);
 }

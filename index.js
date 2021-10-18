@@ -1,5 +1,5 @@
 async function getData() {
-  const response = await fetch("https://jsonplaceholder.typicode.com/photos");
+  const response = await fetch("http://localhost:3000/albums");
   if (response.ok) {
     return await response.json();
   } else {
@@ -11,16 +11,11 @@ function cloneTemplate(id) {
   return document.getElementById(id).content.cloneNode(true);
 }
 
-function getObserver(
-  root,
-  cb = () => {
-    console.log("default");
-  }
-) {
+function getObserver(root, cb = () => {}) {
   const options = {
       root: root,
       rootMargin: "0px",
-      threshold: 1.0,
+      threshold: 0,
     },
     callBack = (entries, observer) => {
       const [row] = entries,
@@ -35,5 +30,15 @@ function getObserver(
 
   return new IntersectionObserver(callBack, options);
 }
+/**
+ * Sets the value of a CSS property
+ * @param {string} prop What CSS property do we want to set
+ * @param {string} value The new value of the CSS property
+ */
+function setCssProperty(prop, value) {
+  document.documentElement.style.setProperty(prop, value);
+}
 
-export { getData, cloneTemplate, getObserver };
+function addRowsToGrid(grid, data) {}
+
+export { getData, cloneTemplate, getObserver, setCssProperty, addRowsToGrid };

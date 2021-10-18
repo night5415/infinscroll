@@ -7,37 +7,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script type="module">
-        import { getData, cloneTemplate, getObserver } from '/index.js';
+        import { getData, cloneTemplate, getObserver, setCssProperty } from '/index.js';
         const data = await getData(),
-            grid = document.getElementById("grid"),
-            last = data.length - 1;
+            container = document.getElementById("container"),
+            grid = document.getElementById("grid");
 
+        let first = 0,
+            last = 100;
 
-        data.forEach((record, index) => {
-            const clone = cloneTemplate("row");
-            grid.appendChild(clone);
+        setCssProperty("--height", data.length * 51);
 
-            if (last !== index)
-                return;
+        const cb = () => {
+            first = last + 1;
+            last = last + 100;
+            addData();
+        };
 
-            getObserver(grid).observe(grid.lastElementChild);
+        function addData() {
+            const subData = data.slice(first, last);
+            console.log(`adding records ${first} through ${last}`);
+            subData.forEach((record, index) => {
+                const clone = cloneTemplate("row"),
+                    row = clone.firstElementChild;
 
-        });
+                row.innerText = `${record.id}) ${record.title}`;
 
+                grid.appendChild(clone);
+
+                if (subData.length - 1 !== index)
+                    return;
+
+                getObserver(container, cb).observe(grid.lastElementChild);
+            });
+        }
+        addData();
     </script>
     <title>Infinity Scroll</title>
 </head>
 
 <body>
     <main>
-        <div id="grid">
-
+        <div id="container">
+            <div id="grid" />
         </div>
     </main>
     <template id="row">
-        <div class="row">
-            <div>Hello World</div>
-        </div>
+        <div class="row" />
     </template>
 </body>
 
